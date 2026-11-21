@@ -1,203 +1,231 @@
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.text.NumberFormat;
+import java.util.ArrayList;
 
 import javax.swing.JButton;
 import javax.swing.JFormattedTextField;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
-public class studentSortWindow extends JFrame {
+public class studentSortWindow extends JFrame implements ActionListener{
 	
-	studentSortWindow() {
+	JTextField[] rollno = new JTextField[10];
+	JTextField[] name = new JTextField[10];
+	JTextField[] address = new JTextField[10];
 	
-		setSize(600, 400);								//Set the frame's width to 400 and height to 300 pixels
+	JLabel[] rollnoLabel = new JLabel[10];
+	JLabel[] nameLabel = new JLabel[10];
+	JLabel[] addressLabel = new JLabel[10];
+	
+	JButton exitButton;
+	JButton rollnoSortButton;
+	JButton nameSortButton;
+	JButton displayButton;
+	JButton updateButton;
+	
+	GridBagConstraints layoutConst = new GridBagConstraints();
+	JPanel jPanel = new JPanel(new GridBagLayout());
+	
+	ArrayList<Student> students;
+	
+	studentSortWindow(ArrayList<Student> students) {
+	
+		this.students = students;
+		
+		//Program window sizing ----------------------------
+		//setSize(600, 400);								//Set the frame's width to ___ pixels and height to ___ pixels
 		setTitle("Student Sorting");					//Set the frame's title
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);	//Set program to exit when the frame is closed
 
-	/*
-	setLayout(new GridBagLayout());
-	GridBagConstraints layoutConst = new GridBagConstraints();
-	
-	//jPanel ---------------------------------------------
-	JPanel jPanel = new JPanel(new GridBagLayout());
+		setLayout(new GridBagLayout());
 
-	//jPanel layout --------------------------------------
-	GridBagConstraints panelConst = new GridBagConstraints();
-	panelConst.gridx = 0;
-	panelConst.gridy = 0;
-	add(jPanel, panelConst);
+		//jPanel layout ------------------------------------
+		GridBagConstraints panelConst = new GridBagConstraints();
+		panelConst.gridx = 0;
+		panelConst.gridy = 0;
+		//panelConst.weightx = 1.0;
+		//panelConst.weighty = 1.0;
+		panelConst.fill = GridBagConstraints.BOTH;
+		panelConst.anchor = GridBagConstraints.NORTH;
+		add(jPanel, panelConst);
 	
-	//Instructions -----------------------------------------
-	JTextArea outputArea = new JTextArea();
-	outputArea.setText("Instructions: Enter 5 numbers into fields below.");
-	outputArea.setEditable(false);
-	layoutConst.gridx = 0;
-	layoutConst.gridy = 0;
-	layoutConst.gridwidth = 2;
-	layoutConst.fill = GridBagConstraints.HORIZONTAL;
-	layoutConst.insets = new Insets(10,10,10,10);
-	jPanel.add(outputArea, layoutConst);
+		//Instructions -----------------------------------------
+		JTextArea outputArea = new JTextArea();
+		outputArea.setText("Instructions: Enter 10 students' information into fields below. Fields are prefilled by default.");
+		outputArea.setEditable(false);
+		layoutConst.gridx = 0;
+		layoutConst.gridy = 0;
+		layoutConst.gridwidth = 6;
+		layoutConst.weightx = 1.0;
+		//layoutConst.weighty = 1.0;
+		//layoutConst.fill = GridBagConstraints.HORIZONTAL;
+		layoutConst.anchor = GridBagConstraints.NORTH;
+		layoutConst.insets = new Insets(10,10,10,10);
+		jPanel.add(outputArea, layoutConst);
+		
+		layoutConst.gridwidth = 1;
 
-	//Number 1 -----------------------------------------------------------
-	number1Field = new JFormattedTextField(NumberFormat.getNumberInstance());	//Create a field for the starting balance
-	number1Field.setColumns(10);
-	JLabel number1Label = new JLabel("Number 1:");
+		//Add Student fields
+		for (int i = 1; i <= 10; i++) {
+			addStudentField(i);
+		}
+		
+		//Fill fields with initial data
+		initialFieldFill(students);
 	
-	//Positioning for number 1 -------------------------------------------
-	layoutConst.gridx = 0;
-	layoutConst.gridy = 1;
-	layoutConst.gridwidth = 1;
-	layoutConst.fill = GridBagConstraints.NONE;
-	layoutConst.insets = new Insets(10,10,10,10);
-	jPanel.add(number1Label, layoutConst);
-
-	layoutConst.gridx = 1;
-	layoutConst.gridy = 1;
-	layoutConst.gridwidth = 1;
-	layoutConst.fill = GridBagConstraints.NONE;
-	layoutConst.insets = new Insets(10,10,10,10);
-	jPanel.add(number1Field, layoutConst);	//Add a field for startingBlanceField to the JFrame
-	
-	number1Field.setText("0");
-
-	//Number 2 -----------------------------------------------------------
-	number2Field = new JFormattedTextField(NumberFormat.getNumberInstance());	//Create a field for the starting balance
-	number2Field.setColumns(10);
-	JLabel number2Label = new JLabel("Number 2:");
-	
-	//Positioning for number 2 -------------------------------------------
-	layoutConst.gridx = 0;
-	layoutConst.gridy = 2;
-	layoutConst.gridwidth = 1;
-	layoutConst.fill = GridBagConstraints.NONE;
-	layoutConst.insets = new Insets(10,10,10,10);
-	jPanel.add(number2Label, layoutConst);
-
-	layoutConst.gridx = 1;
-	layoutConst.gridy = 2;
-	layoutConst.gridwidth = 1;
-	layoutConst.fill = GridBagConstraints.NONE;
-	layoutConst.insets = new Insets(10,10,10,10);
-	jPanel.add(number2Field, layoutConst);	//Add a field for startingBlanceField to the JFrame
-	
-	number2Field.setText("0");
-	
-	//Number 3 -----------------------------------------------------------
-	number3Field = new JFormattedTextField(NumberFormat.getNumberInstance());	//Create a field for the starting balance
-	number3Field.setColumns(10);
-	JLabel number3Label = new JLabel("Number 3:");
-	
-	//Positioning for number 3 -------------------------------------------
-	layoutConst.gridx = 0;
-	layoutConst.gridy = 3;
-	layoutConst.gridwidth = 1;
-	layoutConst.fill = GridBagConstraints.NONE;
-	layoutConst.insets = new Insets(10,10,10,10);
-	jPanel.add(number3Label, layoutConst);
-
-	layoutConst.gridx = 1;
-	layoutConst.gridy = 3;
-	layoutConst.gridwidth = 1;
-	layoutConst.fill = GridBagConstraints.NONE;
-	layoutConst.insets = new Insets(10,10,10,10);
-	jPanel.add(number3Field, layoutConst);	//Add a field for startingBlanceField to the JFrame
-	
-	number3Field.setText("0");
-	
-	//Number 4 -----------------------------------------------------------
-	number4Field = new JFormattedTextField(NumberFormat.getNumberInstance());	//Create a field for the starting balance
-	number4Field.setColumns(10);
-	JLabel number4Label = new JLabel("Number 4:");
-	
-	//Positioning for number 4 -------------------------------------------
-	layoutConst.gridx = 0;
-	layoutConst.gridy = 4;
-	layoutConst.gridwidth = 1;
-	layoutConst.fill = GridBagConstraints.NONE;
-	layoutConst.insets = new Insets(10,10,10,10);
-	jPanel.add(number4Label, layoutConst);
-
-	layoutConst.gridx = 1;
-	layoutConst.gridy = 4;
-	layoutConst.gridwidth = 1;
-	layoutConst.fill = GridBagConstraints.NONE;
-	layoutConst.insets = new Insets(10,10,10,10);
-	jPanel.add(number4Field, layoutConst);	//Add a field for startingBlanceField to the JFrame
-	
-	number4Field.setText("0");
-	
-	//Number 5 -----------------------------------------------------------
-	number5Field = new JFormattedTextField(NumberFormat.getNumberInstance());	//Create a field for the starting balance
-	number5Field.setColumns(10);
-	JLabel number5Label = new JLabel("Number 5:");
-	
-	//Positioning for number 5 -------------------------------------------
-	layoutConst.gridx = 0;
-	layoutConst.gridy = 5;
-	layoutConst.gridwidth = 1;
-	layoutConst.fill = GridBagConstraints.NONE;
-	layoutConst.insets = new Insets(10,10,10,10);
-	jPanel.add(number5Label, layoutConst);
-
-	layoutConst.gridx = 1;
-	layoutConst.gridy = 5;
-	layoutConst.gridwidth = 1;
-	layoutConst.fill = GridBagConstraints.NONE;
-	layoutConst.insets = new Insets(10,10,10,10);
-	jPanel.add(number5Field, layoutConst);	//Add a field for startingBlanceField to the JFrame
-	
-	number5Field.setText("0");
-	
-	//Button to calculate product sum -------------------------------------------------------
-	calcButton = new JButton("Calculate total product sum");
-	calcButton.addActionListener(this);
-	
-	//Add button to panel ------------------------------------------------------------
-	layoutConst.gridx = 0;
-	layoutConst.gridy = 6;
-	layoutConst.gridwidth = 2;
-	layoutConst.fill = GridBagConstraints.NONE;
-	layoutConst.insets = new Insets(10,10,10,10);
-	jPanel.add(calcButton, layoutConst);
-	
-	//Product sum total -----------------------------------------------------------------
-	productSumTotalField = new JTextField(10);
-	productSumTotalLabel = new JLabel("Product sum Total:");
-
-	//Positioning for currentBlance ---------------------------------------------------
-	layoutConst.gridx = 0;
-	layoutConst.gridy = 7;
-	layoutConst.gridwidth = 1;
-	layoutConst.fill = GridBagConstraints.NONE;
-	jPanel.add(productSumTotalLabel, layoutConst);
-
-	layoutConst.gridx = 1;
-	layoutConst.gridy = 7;
-	layoutConst.gridwidth = 1;
-	layoutConst.fill = GridBagConstraints.NONE;
-	jPanel.add(productSumTotalField, layoutConst);
-
-	//Button to update account ------------------------------------------------------
-	exitButton = new JButton("Exit program");
-	exitButton.addActionListener(this);
-	
-	//Add button to panel -----------------------------------------------------------
-	layoutConst.gridx = 0;
-	layoutConst.gridy = 8;
-	layoutConst.gridwidth = 2;
-	layoutConst.fill = GridBagConstraints.NONE;
-	layoutConst.insets = new Insets(10,10,10,10);
-	jPanel.add(exitButton, layoutConst);
-
-	pack();								//Auto size the program to fit everything
-	
-	*/
-	setVisible(true);
+		//Sort by rollno button
+		rollnoSortButton = new JButton("Sort by Roll No");
+		rollnoSortButton.addActionListener(this);
+		layoutConst.gridx = 0;
+		layoutConst.gridy = 11;
+		layoutConst.gridwidth = 1;
+		layoutConst.fill = GridBagConstraints.NONE;
+		layoutConst.insets = new Insets(10,10,10,10);
+		jPanel.add(rollnoSortButton, layoutConst);	
+			
+		//Sort by name button
+		nameSortButton = new JButton("Sort by Name");
+		nameSortButton.addActionListener(this);
+		layoutConst.gridx = 1;
+		layoutConst.gridy = 11;
+		layoutConst.gridwidth = 1;
+		layoutConst.fill = GridBagConstraints.NONE;
+		layoutConst.insets = new Insets(10,10,10,10);
+		jPanel.add(nameSortButton, layoutConst);
+		
+		//Update ArrayList al with current Information
+		updateButton = new JButton("Update ArrayList");
+		updateButton.addActionListener(this);
+		layoutConst.gridx = 2;
+		layoutConst.gridy = 11;
+		layoutConst.gridwidth = 1;
+		layoutConst.fill = GridBagConstraints.NONE;
+		layoutConst.insets = new Insets(10,10,10,10);
+		jPanel.add(updateButton, layoutConst);
+		
+		//Display current ArrayList al information
+		displayButton = new JButton("Display ArrayList");
+		displayButton.addActionListener(this);
+		layoutConst.gridx = 3;
+		layoutConst.gridy = 11;
+		layoutConst.gridwidth = 1;
+		layoutConst.fill = GridBagConstraints.NONE;
+		layoutConst.insets = new Insets(10,10,10,10);
+		jPanel.add(displayButton, layoutConst);
+		
+		//Exit Button to update account ------------------------------------------------------
+		exitButton = new JButton("Exit program");
+		exitButton.addActionListener(this);
+		layoutConst.gridx = 5;
+		layoutConst.gridy = 11;
+		layoutConst.gridwidth = 1;
+		layoutConst.fill = GridBagConstraints.NONE;
+		layoutConst.insets = new Insets(10,10,10,10);
+		jPanel.add(exitButton, layoutConst);
+		
+		pack();								//Auto size the program to fit everything
+		
+		//Set visibility
+		setVisible(true);			//Set the JFrame's visibility to True. The default is False.
 	
 	}
+
+	private void initialFieldFill(ArrayList<Student> students) {
+		for (int i = 0; i < 10; i++) {
+			rollno[i].setText(String.valueOf(students.get(i).rollno));
+			name[i].setText(students.get(i).name);
+			address[i].setText(students.get(i).address);
+		}
+	}
+
+	private void addStudentField(int i) {
+		
+		rollno[i - 1] = new JTextField(10);
+		name[i - 1] = new JTextField(10);
+		address[i - 1] = new JTextField(30);
+		
+		JLabel rollnoLabel = new JLabel("Roll Number: ");
+		JLabel nameLabel = new JLabel("Name: ");
+		JLabel addressLabel = new JLabel("Address: ");
+		
+		layoutConst.insets = new Insets(5, 5, 5, 5);
+		layoutConst.fill = GridBagConstraints.NONE;
+		
+		layoutConst.gridx = 0;
+		layoutConst.gridy = i;
+		jPanel.add(rollnoLabel, layoutConst);
+		
+		layoutConst.gridx = 1;
+		jPanel.add(rollno[i-1], layoutConst);
+		
+		layoutConst.gridx = 2;
+		jPanel.add(nameLabel, layoutConst);
+		
+		layoutConst.gridx = 3;
+		jPanel.add(name[i-1], layoutConst);
+		
+		layoutConst.gridx = 4;
+		jPanel.add(addressLabel, layoutConst);
+		
+		layoutConst.gridx = 5;
+		jPanel.add(address[i-1], layoutConst);
+		
+	}
+	
+	//Event Handler ----------------------------------------------------------------------
+	public void actionPerformed(ActionEvent e) {
+		if (e.getSource() == exitButton) {
+			System.exit(0);
+		} else if (e.getSource() == rollnoSortButton) {
+			JOptionPane.showMessageDialog(this, "Roll No Sort Button was pressed"); //Used for testing
+			//Get all info from the fields and add to an arraylist
+			updateArray();
+			//Sort the arraylist
+			//Print the updated info to the correct fields
+		} else if (e.getSource() == nameSortButton) {
+			JOptionPane.showMessageDialog(this, "Name Sort Button was pressed"); //Used for testing
+			//Get all info from the fields and add to an arraylist
+			//Sort the arraylist
+			//Print the updated info to the correct fields
+		} else if (e.getSource() == updateButton) {
+			JOptionPane.showMessageDialog(this, "Update Button was pressed"); //Used for testing
+			//Get all info from the fields and add to an arraylist
+			updateArray();
+		} else if (e.getSource() == displayButton) {
+			JOptionPane.showMessageDialog(this, "Display Button was pressed"); //Used for testing
+			//Print the current ArrayList info to the console
+			displayArray();
+		}
+	}
+
+	//Update arraylist information with the info currently in the fields
+	private void updateArray() {
+		for (int i = 0; i < 10; i++) {
+			int rollNumber = Integer.parseInt(rollno[i].getText());
+			String studentName = name[i].getText();
+			String studentAddress = address[i].getText();
+			students.get(i).rollno = rollNumber;
+			students.get(i).name = studentName;
+			students.get(i).address = studentAddress;
+	    }
+	}
+	
+	private void displayArray() {
+		// TODO Auto-generated method stub
+		System.out.println("Current ArrayList information: ");
+		for (int i = 0; i < 10; i++) {
+			System.out.println("ArrayList element: " + i + ", rollno: " + students.get(i).rollno
+					+ ", name: " + students.get(i).name + ", address: " + students.get(i).address);
+		}
+		System.out.println("");
+	}
+	
 }
