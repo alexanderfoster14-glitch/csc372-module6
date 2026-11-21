@@ -1,8 +1,34 @@
 Basic layout
 
+class student
+	int rollno;
+	String name;
+	String address;
 
+//create the student obejcts
+import java.util.*;
+import java.io.*;
+class Simple {
+	public static void main(String args[]) {
+		ArrayList al=new ArrayList();
+		al.add(new Student(101,"Vijay",23));
+		al.add(new Student(106,"Ajay",27));
+		al.add(new Student(105,"Jai",21));
+	}
+}
 
+//Sorting algorithms
+//two comparator classes
+sort student objects by name
+sort student objects by rollno (roll number)
 
+sortName {
+	sort <student> within the array by nume
+}
+
+sortRollNo {
+	sort <student> within the arry by rollno
+}
 
 
 
