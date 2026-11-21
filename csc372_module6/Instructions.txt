@@ -1,0 +1,35 @@
+Instructions
+
+Critical Thinking Assignment
+
+Storing an ArrayList
+
+Create a Java program that will store 10 student objects in an ArrayList, ArrayList<Student>.
+	A student object consists of the following fields:
+		int rollno
+		String name
+		String address
+
+Implement two comparator classes to sort student objects by name and by rollno (roll number).
+	Implement your own selection sort method and place your code in a separate Java source file.
+	Do not use a sort method from the Java collections library.
+
+Students must use appropriate version control for all programmatic assignments created.
+	GIT repositories should be established, and screen captures of repositories should be
+	submitted with each assignment.
+
+What to submit?
+	Your source code in text version (not screenshot).
+	Your entire IDE screenshot displaying source code and output.
+	Include additional output screenshots displaying different test cases.
+	Screenshot of your version control or GIT repository link 
+	Attach all these components into a single Microsoft Word document or submit a zip file containing all
+		of these components.
+
+-------------------------------------------------------------------------------------------------------------------
+
+
+
+
+
+
