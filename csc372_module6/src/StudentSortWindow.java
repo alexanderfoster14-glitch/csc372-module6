@@ -15,7 +15,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
-public class studentSortWindow extends JFrame implements ActionListener{
+public class StudentSortWindow extends JFrame implements ActionListener{
 	
 	JTextField[] rollno = new JTextField[10];
 	JTextField[] name = new JTextField[10];
@@ -36,7 +36,7 @@ public class studentSortWindow extends JFrame implements ActionListener{
 	
 	ArrayList<Student> students;
 	
-	studentSortWindow(ArrayList<Student> students) {
+	StudentSortWindow(ArrayList<Student> students) {
 	
 		this.students = students;
 		
@@ -187,13 +187,13 @@ public class studentSortWindow extends JFrame implements ActionListener{
 		} else if (e.getSource() == rollnoSortButton) {
 			//JOptionPane.showMessageDialog(this, "Roll No Sort Button was pressed"); //Used for testing
 			updateArray();
-			sortingMethods.sortRollNo(students);
+			NameComparator.sortRollNo(students);
 			updateFields();
 			//Print the updated info to the correct fields
 		} else if (e.getSource() == nameSortButton) {
 			//JOptionPane.showMessageDialog(this, "Name Sort Button was pressed"); //Used for testing
 			updateArray();
-			sortingMethods.sortName(students);
+			NameComparator.sortName(students);
 			updateFields();
 			//Print the updated info to the correct fields
 		} else if (e.getSource() == updateButton) {
@@ -206,8 +206,11 @@ public class studentSortWindow extends JFrame implements ActionListener{
 	}
 
 	private void updateFields() {
-		// TODO Auto-generated method stub
-		
+		for (int i = 0; i < 10; i++) {
+			rollno[i].setText(String.valueOf(students.get(i).rollno));
+			name[i].setText(students.get(i).name);
+			address[i].setText(students.get(i).address);
+		}
 	}
 
 	//Update arraylist information with the info currently in the fields

@@ -1,6 +1,6 @@
 import java.util.ArrayList;
 
-public class studentSorting {
+public class StudentSorting {
 	
 	public static void main (String[] args) {
 		//Create arraylist with 10 Students
@@ -10,9 +10,9 @@ public class studentSorting {
 		}
 		
 		//Used for testing. Populates ArrayList with test data.
-		new populateTestInfo(students);
+		new PopulateTestInfo(students);
 		
 		//Create the program window
-		new studentSortWindow(students);
+		new StudentSortWindow(students);
 	}
 }

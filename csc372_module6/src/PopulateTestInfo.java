@@ -1,10 +1,10 @@
 import java.util.ArrayList;
 
-public class populateTestInfo {
+public class PopulateTestInfo {
 	
 	ArrayList<Student> students;
 	
-	populateTestInfo(ArrayList<Student> students) {
+	PopulateTestInfo(ArrayList<Student> students) {
 		this.students = students;
 		
 		//Student #1
