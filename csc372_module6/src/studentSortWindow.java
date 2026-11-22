@@ -185,25 +185,29 @@ public class studentSortWindow extends JFrame implements ActionListener{
 		if (e.getSource() == exitButton) {
 			System.exit(0);
 		} else if (e.getSource() == rollnoSortButton) {
-			JOptionPane.showMessageDialog(this, "Roll No Sort Button was pressed"); //Used for testing
-			//Get all info from the fields and add to an arraylist
+			//JOptionPane.showMessageDialog(this, "Roll No Sort Button was pressed"); //Used for testing
 			updateArray();
-			//Sort the arraylist
+			sortingMethods.sortRollNo(students);
+			updateFields();
 			//Print the updated info to the correct fields
 		} else if (e.getSource() == nameSortButton) {
-			JOptionPane.showMessageDialog(this, "Name Sort Button was pressed"); //Used for testing
-			//Get all info from the fields and add to an arraylist
-			//Sort the arraylist
+			//JOptionPane.showMessageDialog(this, "Name Sort Button was pressed"); //Used for testing
+			updateArray();
+			sortingMethods.sortName(students);
+			updateFields();
 			//Print the updated info to the correct fields
 		} else if (e.getSource() == updateButton) {
-			JOptionPane.showMessageDialog(this, "Update Button was pressed"); //Used for testing
-			//Get all info from the fields and add to an arraylist
+			//JOptionPane.showMessageDialog(this, "Update Button was pressed"); //Used for testing
 			updateArray();
 		} else if (e.getSource() == displayButton) {
-			JOptionPane.showMessageDialog(this, "Display Button was pressed"); //Used for testing
-			//Print the current ArrayList info to the console
+			//JOptionPane.showMessageDialog(this, "Display Button was pressed"); //Used for testing
 			displayArray();
 		}
+	}
+
+	private void updateFields() {
+		// TODO Auto-generated method stub
+		
 	}
 
 	//Update arraylist information with the info currently in the fields
