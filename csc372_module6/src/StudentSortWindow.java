@@ -3,14 +3,11 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.text.NumberFormat;
 import java.util.ArrayList;
 
 import javax.swing.JButton;
-import javax.swing.JFormattedTextField;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
@@ -40,24 +37,20 @@ public class StudentSortWindow extends JFrame implements ActionListener{
 	
 		this.students = students;
 		
-		//Program window sizing ----------------------------
-		//setSize(600, 400);								//Set the frame's width to ___ pixels and height to ___ pixels
 		setTitle("Student Sorting");					//Set the frame's title
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);	//Set program to exit when the frame is closed
 
 		setLayout(new GridBagLayout());
 
-		//jPanel layout ------------------------------------
+		//jPanel layout
 		GridBagConstraints panelConst = new GridBagConstraints();
 		panelConst.gridx = 0;
 		panelConst.gridy = 0;
-		//panelConst.weightx = 1.0;
-		//panelConst.weighty = 1.0;
 		panelConst.fill = GridBagConstraints.BOTH;
 		panelConst.anchor = GridBagConstraints.NORTH;
 		add(jPanel, panelConst);
 	
-		//Instructions -----------------------------------------
+		//Instructions
 		JTextArea outputArea = new JTextArea();
 		outputArea.setText("Instructions: Enter 10 students' information into fields below. Fields are prefilled by default.");
 		outputArea.setEditable(false);
@@ -65,8 +58,6 @@ public class StudentSortWindow extends JFrame implements ActionListener{
 		layoutConst.gridy = 0;
 		layoutConst.gridwidth = 6;
 		layoutConst.weightx = 1.0;
-		//layoutConst.weighty = 1.0;
-		//layoutConst.fill = GridBagConstraints.HORIZONTAL;
 		layoutConst.anchor = GridBagConstraints.NORTH;
 		layoutConst.insets = new Insets(10,10,10,10);
 		jPanel.add(outputArea, layoutConst);
@@ -121,7 +112,7 @@ public class StudentSortWindow extends JFrame implements ActionListener{
 		layoutConst.insets = new Insets(10,10,10,10);
 		jPanel.add(displayButton, layoutConst);
 		
-		//Exit Button to update account ------------------------------------------------------
+		//Exit Button to update account
 		exitButton = new JButton("Exit program");
 		exitButton.addActionListener(this);
 		layoutConst.gridx = 5;
@@ -131,11 +122,10 @@ public class StudentSortWindow extends JFrame implements ActionListener{
 		layoutConst.insets = new Insets(10,10,10,10);
 		jPanel.add(exitButton, layoutConst);
 		
-		pack();								//Auto size the program to fit everything
+		pack();						//Auto size the program to fit everything
 		
 		//Set visibility
 		setVisible(true);			//Set the JFrame's visibility to True. The default is False.
-	
 	}
 
 	private void initialFieldFill(ArrayList<Student> students) {
@@ -149,7 +139,7 @@ public class StudentSortWindow extends JFrame implements ActionListener{
 	private void addStudentField(int i) {
 		
 		rollno[i - 1] = new JTextField(10);
-		name[i - 1] = new JTextField(10);
+		name[i - 1] = new JTextField(20);
 		address[i - 1] = new JTextField(30);
 		
 		JLabel rollnoLabel = new JLabel("Roll Number: ");
@@ -187,13 +177,13 @@ public class StudentSortWindow extends JFrame implements ActionListener{
 		} else if (e.getSource() == rollnoSortButton) {
 			//JOptionPane.showMessageDialog(this, "Roll No Sort Button was pressed"); //Used for testing
 			updateArray();
-			NameComparator.sortRollNo(students);
+			SortingMethod.mergeSort(students, new RollNoComparator());
 			updateFields();
 			//Print the updated info to the correct fields
 		} else if (e.getSource() == nameSortButton) {
 			//JOptionPane.showMessageDialog(this, "Name Sort Button was pressed"); //Used for testing
 			updateArray();
-			NameComparator.sortName(students);
+			SortingMethod.mergeSort(students, new NameComparator());
 			updateFields();
 			//Print the updated info to the correct fields
 		} else if (e.getSource() == updateButton) {
@@ -226,7 +216,6 @@ public class StudentSortWindow extends JFrame implements ActionListener{
 	}
 	
 	private void displayArray() {
-		// TODO Auto-generated method stub
 		System.out.println("Current ArrayList information: ");
 		for (int i = 0; i < 10; i++) {
 			System.out.println("ArrayList element: " + i + ", rollno: " + students.get(i).rollno
